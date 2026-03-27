@@ -13,10 +13,40 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
     color: #ccc;
 }
 
-/* Başlık */
+/* Giriş ekranı */
+#startScreen {
+    text-align: center;
+}
+
+#startBtn {
+    padding: 15px 30px;
+    font-size: 20px;
+    background: black;
+    color: red;
+    border: 2px solid red;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 15px red;
+    transition: 0.3s;
+}
+
+#startBtn:active {
+    transform: scale(0.95);
+}
+
+/* Oyun */
+#gameContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 h1 {
     margin: 15px;
     font-size: 22px;
@@ -24,7 +54,6 @@ h1 {
     text-shadow: 0 0 10px red;
 }
 
-/* Grid */
 #game {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -33,7 +62,6 @@ h1 {
     max-width: 500px;
 }
 
-/* Kart */
 .card {
     aspect-ratio: 1 / 1;
     border-radius: 10px;
@@ -43,7 +71,6 @@ h1 {
     transition: transform 0.5s;
 }
 
-/* Mobilde tıklama efekti */
 .card:active {
     transform: scale(0.95);
 }
@@ -60,13 +87,11 @@ h1 {
     backface-visibility: hidden;
 }
 
-/* Ön yüz */
 .front {
     transform: rotateY(180deg);
     object-fit: cover;
 }
 
-/* Arka yüz (korku) */
 .back {
     background: radial-gradient(circle, #111, #000);
     border: 2px solid #220000;
@@ -78,7 +103,6 @@ h1 {
     text-shadow: 0 0 8px red;
 }
 
-/* Glitch efekti */
 @keyframes glitch {
     0% { transform: translate(0); }
     25% { transform: translate(-1px, 1px); }
@@ -90,22 +114,41 @@ h1 {
 .back span {
     animation: glitch 0.4s infinite;
 }
-
-/* Küçük ekranlar için */
-@media (max-width: 400px) {
-    h1 {
-        font-size: 18px;
-    }
-}
 </style>
 </head>
 
 <body>
 
-<h1>☠ KORKU HAFIZA ☠</h1>
-<div id="game"></div>
+<!-- Giriş -->
+<div id="startScreen">
+    <h1>☠ HAZIR MISIN? ☠</h1>
+    <button id="startBtn">GİRİŞ</button>
+</div>
+
+<!-- Oyun -->
+<div id="gameContainer">
+    <h1>☠ KORKU HAFIZA ☠</h1>
+    <div id="game"></div>
+</div>
+
+<!-- Ses -->
+<audio id="bgMusic" src="1.mp3" loop></audio>
 
 <script>
+const startBtn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
+const gameContainer = document.getElementById("gameContainer");
+const music = document.getElementById("bgMusic");
+
+startBtn.onclick = () => {
+    startScreen.style.display = "none";
+    gameContainer.style.display = "flex";
+
+    music.volume = 0.3; // %30 ses
+    music.play();
+};
+
+/* OYUN KODU */
 const images = [
     "1.png","2.png","3.png","4.png","5.png",
     "6.png","7.png","8.png","9.png","10.png"
